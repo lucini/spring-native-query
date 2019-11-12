@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NativeQueryReplaceSql {
-
     NativeQueryReplaceSqlParams[] values() default {};
     Class[] processorParams() default {};
-
 }

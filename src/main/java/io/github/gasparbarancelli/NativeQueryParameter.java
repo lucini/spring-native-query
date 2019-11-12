@@ -20,7 +20,7 @@ class NativeQueryParameter {
         this.value = value;
     }
 
-    static List<NativeQueryParameter> ofDeclaredMethods(String parentName, Class classe, Object object) {
+    static List<NativeQueryParameter> ofDeclaredMethods(String parentName, Class nqClass, Object object) {
         ArrayList<NativeQueryParameter> parameterList = new ArrayList<NativeQueryParameter>();
 
         class FieldInfo {
@@ -36,7 +36,7 @@ class NativeQueryParameter {
         }
 
         Map<String, FieldInfo> mapField = new HashMap<>();
-        for (Field field : classe.getDeclaredFields()) {
+        for (Field field : nqClass.getDeclaredFields()) {
             NativeQueryParam param = null;
             if (field.isAnnotationPresent(NativeQueryParam.class)) {
                 param = field.getAnnotation(NativeQueryParam.class);
@@ -44,7 +44,7 @@ class NativeQueryParameter {
             mapField.put(WordUtils.capitalize(field.getName()), new FieldInfo(param, field.getType()));
         }
 
-        for (Method method : classe.getDeclaredMethods()) {
+        for (Method method : nqClass.getDeclaredMethods()) {
             if (method.getName().startsWith("get") || method.getName().startsWith("is")) {
                 Object value = null;
                 try {

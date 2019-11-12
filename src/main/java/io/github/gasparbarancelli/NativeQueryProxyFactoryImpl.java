@@ -13,18 +13,18 @@ public class NativeQueryProxyFactoryImpl implements NativeQueryProxyFactory {
     }
 
     @Override
-    public Object create(Class<? extends NativeQuery> classe) {
+    public Object create(Class<? extends NativeQuery> nqClass) {
         ProxyFactory proxy = new ProxyFactory();
-        proxy.setTarget(Mockito.mock(classe));
-        proxy.setInterfaces(classe, NativeQuery.class);
+        proxy.setTarget(Mockito.mock(nqClass));
+        proxy.setInterfaces(nqClass, NativeQuery.class);
         proxy.addAdvice((MethodInterceptor) invocation -> {
             if ("toString".equals(invocation.getMethod().getName())) {
                 return "NativeQuery Implementation";
             }
-            NativeQueryInfo info = NativeQueryInfo.of(classe, invocation);
+            NativeQueryInfo info = NativeQueryInfo.of(nqClass, invocation);
             return nativeQueryMethodInterceptor.executeQuery(info);
         });
-        return proxy.getProxy(classe.getClassLoader());
+        return proxy.getProxy(nqClass.getClassLoader());
     }
 
 }

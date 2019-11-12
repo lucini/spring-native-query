@@ -38,19 +38,19 @@ public class NativeQueryInfo {
     private NativeQueryInfo() {
     }
 
-    public static NativeQueryInfo of(Class<? extends NativeQuery> classe, MethodInvocation invocation) {
+    public static NativeQueryInfo of(Class<? extends NativeQuery> nqClass, MethodInvocation invocation) {
         NativeQueryInfo info = new NativeQueryInfo();
 
         info.file = "nativeQuery/";
-        if (classe.isAnnotationPresent(NativeQueryFolder.class)) {
-            info.file += classe.getAnnotation(NativeQueryFolder.class).value() + "/";
+        if (nqClass.isAnnotationPresent(NativeQueryFolder.class)) {
+            info.file += nqClass.getAnnotation(NativeQueryFolder.class).value() + "/";
         }
         info.file += invocation.getMethod().getName() + ".twig";
 
         if (invocation.getMethod().isAnnotationPresent(NativeQueryReplaceSql.class)) {
             if (invocation.getMethod().getAnnotation(NativeQueryReplaceSql.class).values().length > 0) {
                 for (NativeQueryReplaceSqlParams value : invocation.getMethod().getAnnotation(NativeQueryReplaceSql.class).values()) {
-                    info.replaceSql.put(value.chave(), value.value());
+                    info.replaceSql.put(value.key(), value.value());
 
                 }
             }

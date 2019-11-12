@@ -6,9 +6,8 @@ import org.hibernate.transform.Transformers;
 import org.hibernate.type.LongType;
 import org.springframework.data.domain.PageImpl;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
+import java.util.List;
 
 public class NativeQueryMethodInterceptorImpl implements NativeQueryMethodInterceptor {
 

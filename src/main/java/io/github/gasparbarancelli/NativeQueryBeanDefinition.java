@@ -6,7 +6,8 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 
 class NativeQueryBeanDefinition {
 
-    private NativeQueryBeanDefinition() {}
+    private NativeQueryBeanDefinition() {
+    }
 
     static AbstractBeanDefinition of(Class<? extends NativeQuery> classe, Object source) {
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(classe.getName());

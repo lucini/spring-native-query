@@ -19,10 +19,10 @@ public class NativeQueryRegistryImpl implements NativeQueryRegistry {
 
     @Override
     public void registry(Set<Class<? extends NativeQuery>> nimitzNativeQueryList) {
-        for (Class<? extends NativeQuery> classe : nimitzNativeQueryList) {
-            Object source = nativeQueryProxyFactory.create(classe);
-            AbstractBeanDefinition beanDefinition = NativeQueryBeanDefinition.of(classe, source);
-            String beanName = Introspector.decapitalize(classe.getSimpleName());
+        for (Class<? extends NativeQuery> nqClass : nimitzNativeQueryList) {
+            Object source = nativeQueryProxyFactory.create(nqClass);
+            AbstractBeanDefinition beanDefinition = NativeQueryBeanDefinition.of(nqClass, source);
+            String beanName = Introspector.decapitalize(nqClass.getSimpleName());
             registry.registerBeanDefinition(beanName, beanDefinition);
         }
     }

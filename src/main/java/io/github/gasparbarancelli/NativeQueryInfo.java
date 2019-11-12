@@ -48,16 +48,13 @@ public class NativeQueryInfo {
         info.file += invocation.getMethod().getName() + ".twig";
 
         if (invocation.getMethod().isAnnotationPresent(NativeQueryReplaceSql.class)) {
-            if (invocation.getMethod().getAnnotation(NativeQueryReplaceSql.class).values() != null
-                    && invocation.getMethod().getAnnotation(NativeQueryReplaceSql.class).values().length > 0) {
+            if (invocation.getMethod().getAnnotation(NativeQueryReplaceSql.class).values().length > 0) {
                 for (NativeQueryReplaceSqlParams value : invocation.getMethod().getAnnotation(NativeQueryReplaceSql.class).values()) {
                     info.replaceSql.put(value.chave(), value.value());
 
                 }
             }
-            if (invocation.getMethod().getAnnotation(NativeQueryReplaceSql.class).processorParams() != null) {
-                info.processorSqlList.addAll(Arrays.asList(invocation.getMethod().getAnnotation(NativeQueryReplaceSql.class).processorParams()));
-            }
+            info.processorSqlList.addAll(Arrays.asList(invocation.getMethod().getAnnotation(NativeQueryReplaceSql.class).processorParams()));
         }
 
         info.parameterList = new ArrayList<>();
@@ -92,6 +89,7 @@ public class NativeQueryInfo {
 
         return info;
     }
+
     String getSql() {
         if (sql == null) {
             JtwigTemplate template = JtwigTemplate.classpathTemplate(file, JtwigTemplateConfig.get());
@@ -108,7 +106,7 @@ public class NativeQueryInfo {
                 }
             }
             for (Map.Entry<String, String> replaceSqlEntry : replaceSql.entrySet()) {
-                sql = sql.replaceAll("\\$\\{"+replaceSqlEntry.getKey()+"\\}", replaceSqlEntry.getValue());
+                sql = sql.replaceAll("\\$\\{" + replaceSqlEntry.getKey() + "\\}", replaceSqlEntry.getValue());
             }
 
             if (pageable != null) {
